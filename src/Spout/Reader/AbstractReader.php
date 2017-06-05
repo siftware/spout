@@ -95,6 +95,19 @@ abstract class AbstractReader implements ReaderInterface
     }
 
     /**
+     * Sets whether to ignore the 'spans' attribute in rows
+     *
+     * @api
+     * @param bool $shouldIgnoreSpans
+     * @return AbstractReader
+     */
+    public function setShouldIgnoreSpans($shouldIgnoreSpans)
+    {
+        $this->getOptions()->setShouldIgnoreSpans($shouldIgnoreSpans);
+        return $this;
+    }
+
+    /**
      * Prepares the reader to read the given file. It also makes sure
      * that the file exists and is readable.
      *

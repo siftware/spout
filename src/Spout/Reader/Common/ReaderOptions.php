@@ -16,6 +16,9 @@ class ReaderOptions
     /** @var bool Whether empty rows should be returned or skipped */
     protected $shouldPreserveEmptyRows = false;
 
+    /** @var bool Whether RowIterator should ignore the 'spans' option which is sometimes invalid */
+    protected $shouldIgnoreSpans = false;
+
     /**
      * @return bool Whether date/time values should be returned as PHP objects or be formatted as strings.
      */
@@ -53,6 +56,26 @@ class ReaderOptions
     public function setShouldPreserveEmptyRows($shouldPreserveEmptyRows)
     {
         $this->shouldPreserveEmptyRows = $shouldPreserveEmptyRows;
+        return $this;
+    }
+
+    /**
+     * @return bool Whether 'spans' should be ignored
+     */
+    public function shouldIgnoreSpans()
+    {
+        return $this->shouldIgnoreSpans;
+    }
+
+    /**
+     * Sets whether 'spans' should be ignored
+     *
+     * @param bool $shouldIgnoreSpans
+     * @return ReaderOptions
+     */
+    public function setShouldIgnoreSpans($shouldIgnoreSpans)
+    {
+        $this->shouldIgnoreSpans = $shouldIgnoreSpans;
         return $this;
     }
 }
