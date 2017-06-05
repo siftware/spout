@@ -241,7 +241,7 @@ class RowIterator implements IteratorInterface
         // Read spans info if present
         $numberOfColumnsForRow = $this->numColumns;
         $spans = $xmlReader->getAttribute(self::XML_ATTRIBUTE_SPANS); // returns '1:5' for instance
-        if ($spans) {
+        if ($spans && false) {
             list(, $numberOfColumnsForRow) = explode(':', $spans);
             $numberOfColumnsForRow = intval($numberOfColumnsForRow);
         }
