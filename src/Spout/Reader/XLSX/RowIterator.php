@@ -78,6 +78,9 @@ class RowIterator implements IteratorInterface
     /** @var int Last column index processed (zero-based) */
     protected $lastColumnIndexProcessed = -1;
 
+    /** @var bool Whether to ignore spans or not */
+    protected $shouldIgnoreSpans;
+
     /**
      * @param string $filePath Path of the XLSX file being read
      * @param string $sheetDataXMLFilePath Path of the sheet data XML file as in [Content_Types].xml
@@ -95,6 +98,7 @@ class RowIterator implements IteratorInterface
         $this->cellValueFormatter = new CellValueFormatter($sharedStringsHelper, $this->styleHelper, $options->shouldFormatDates());
 
         $this->shouldPreserveEmptyRows = $options->shouldPreserveEmptyRows();
+        $this->shouldIgnoreSpans = $options->shouldIgnoreSpans();
 
         // Register all callbacks to process different nodes when reading the XML file
         $this->xmlProcessor = new XMLProcessor($this->xmlReader);
@@ -241,7 +245,7 @@ class RowIterator implements IteratorInterface
         // Read spans info if present
         $numberOfColumnsForRow = $this->numColumns;
         $spans = $xmlReader->getAttribute(self::XML_ATTRIBUTE_SPANS); // returns '1:5' for instance
-        if ($spans && false) {
+        if ($spans && $this->shouldIgnoreSpans() === false) {
             list(, $numberOfColumnsForRow) = explode(':', $spans);
             $numberOfColumnsForRow = intval($numberOfColumnsForRow);
         }
